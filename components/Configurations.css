@@ -1,0 +1,49 @@
+.config-panel {
+	width: 300px;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+	padding: 25px;
+	z-index: 1000;
+}
+.config-panel h3 {
+	margin-top: 0;
+	margin-bottom: 16px;
+	font-size: 1.2em;
+}
+.config-panel label {
+	display: block;
+	margin-bottom: 6px;
+	font-weight: 500;
+}
+.config-panel select {
+	width: 100%;
+	padding: 7px 15px;
+	margin-bottom: 16px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+    appearance: none;
+	background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 16px 16px;
+}
+
+.config-panel button {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+    margin-top: 15px;
+	padding: 10px 30px;
+	font-size: 16px;
+	background: var(--secondary-blue);
+	color: #fff;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.config-panel button:hover {
+    background: var(--primary-blue);
+}

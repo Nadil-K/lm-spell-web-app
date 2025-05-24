@@ -16,9 +16,13 @@
         <?php include 'components/Navbar.php'; ?>
         
         <div class="container">
-            <textarea placeholder="Enter your text here..."></textarea>
-            <button type="button">Correct</button>
-            <textarea placeholder="Corrected text will appear here..." readonly></textarea>
+            <div class="left-panel">
+                <textarea class="input-textarea" placeholder="Enter your text here..."></textarea>
+                <textarea class="input-textarea" placeholder="Corrected text will appear here..." readonly></textarea>
+            </div>
+            <div class="right-panel">
+                <?php include 'components/Configurations.php'; ?>
+            </div>
         </div>
 
         <div class="wave-background">
