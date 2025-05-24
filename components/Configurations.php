@@ -3,6 +3,8 @@
 
 <div class="config-panel">
 	<h3>Configurations</h3>
+    <hr>
+
 	<form>
 
         <label for="language">Language</label>

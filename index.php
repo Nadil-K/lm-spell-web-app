@@ -19,8 +19,8 @@
 
             <div class="left-panel">
                 <textarea class="input-textarea" placeholder="Enter your text here..."></textarea>
-                <textarea class="input-textarea" placeholder="Corrected text will appear here..." readonly></textarea>
                 <button id="correct">Correct</button>
+                <textarea class="input-textarea" placeholder="Corrected text will appear here..." readonly></textarea>
             </div>
 
             <div class="right-panel">

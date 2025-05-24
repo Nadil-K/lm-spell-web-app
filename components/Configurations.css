@@ -8,14 +8,18 @@
 	z-index: 1000;
 }
 .config-panel h3 {
-	margin-top: 0;
-	margin-bottom: 16px;
+	margin: 0;
 	font-size: 1.2em;
     color: var(--primary-blue);
 }
+.config-panel hr {
+    border: none;
+    border-top: 1px solid var(--secondary-blue);
+    margin-bottom: 20px;
+}
 .config-panel label {
 	display: block;
-	margin-bottom: 8px;
+	margin-bottom: 10px;
 	font-weight: 500;
 }
 .config-panel select {
@@ -29,22 +33,4 @@
 	background-repeat: no-repeat;
 	background-position: right 10px center;
 	background-size: 16px 16px;
-}
-
-.config-panel button {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-    margin-top: 15px;
-	padding: 10px 30px;
-	font-size: 16px;
-	background: var(--secondary-blue);
-	color: #fff;
-	border: none;
-	border-radius: 20px;
-	cursor: pointer;
-	transition: background 0.2s;
-}
-.config-panel button:hover {
-    background: var(--primary-blue);
 }
