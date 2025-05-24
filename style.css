@@ -53,6 +53,12 @@ body {
     display: block;
 }
 
+#huggingface-logo {
+    height: 20px;
+    width: auto;
+    display: block;
+}
+
 .navbar-title {
     margin-left: 40px;
     font-size: 2rem;

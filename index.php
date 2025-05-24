@@ -23,6 +23,10 @@
                 <img src="assets/github.svg" alt="GitHub Logo" id="github-logo">
                 Library
             </a>
+            <a href="https://huggingface.co/surge-masks" class="navbar-link" target="_blank">
+                <img src="assets/huggingface.png" alt="HuggingFace Logo" id="huggingface-logo">
+                Checkpoints
+            </a>
             <a href="about.php" class="navbar-link">About Us</a>
         </div>
     </nav>
