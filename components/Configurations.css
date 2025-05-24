@@ -14,7 +14,7 @@
 }
 .config-panel label {
 	display: block;
-	margin-bottom: 6px;
+	margin-bottom: 8px;
 	font-weight: 500;
 }
 .config-panel select {
