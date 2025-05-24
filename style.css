@@ -23,16 +23,16 @@ body {
     align-items: center;
     gap: 20px;
     width: 100%;
-    max-width: 500px;
 }
 textarea {
     width: 100%;
-    min-height: 100px;
+    max-width: 700px;
+    min-height: 250px;
     resize: vertical;
-    padding: 10px;
+    padding: 20px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 20px;
     box-sizing: border-box;
 }
 button {
@@ -47,4 +47,15 @@ button {
 }
 button:hover {
     background: var(--primary-blue);
+}
+
+.wave-background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: -50px;
+    background-size: cover;
+    z-index: -100;
+    pointer-events: none;
+    width: 100vw;
 }
