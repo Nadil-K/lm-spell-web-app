@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    padding-top: 60px;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+    height: 65px;
+    gap: 20px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+#uom-logo {
+    height: 60px;
+    width: auto;
+    display: block;
+}
+
+#cse-logo {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+#github-logo {
+    height: 20px;
+    width: auto;
+    display: block;
+}
+
+.navbar-title {
+    margin-left: 40px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.navbar-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    border-color: #333;
+    transition: background 0.2s, color 0.2s;
+}
+
+.navbar-link:hover {
+    background: #007bff;
+    color: #fff;
+}
+
+h1 {
+    margin-bottom: 40px;
+    color: #333;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+button {
+    padding: 10px 30px;
+    font-size: 16px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button:hover {
+    background: #0056b3;
+}
