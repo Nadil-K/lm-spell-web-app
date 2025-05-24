@@ -1,44 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>LM Spell</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>LM Spell</title>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
-<body>
-    <nav class="navbar">
-        <div class="navbar-left">
-            <div class="navbar-logo">
-                <img src="assets/uom.png" alt="Logo" id="uom-logo">
-            </div>
-            <div class="navbar-logo">
-                <img src="assets/cse.webp" alt="Logo" id="cse-logo">
-            </div>
-            <span class="navbar-title">LM Spell</span>
-        </div>
-        <div class="navbar-right">
-            <a href="https://github.com/Nadil-K/lm-spell" class="navbar-link" target="_blank">
-                <img src="assets/github.svg" alt="GitHub Logo" id="github-logo">
-                Library
-            </a>
-            <a href="https://huggingface.co/surge-masks" class="navbar-link" target="_blank">
-                <img src="assets/huggingface.png" alt="HuggingFace Logo" id="huggingface-logo">
-                Checkpoints
-            </a>
-            <a href="about.php" class="navbar-link">About Us</a>
-        </div>
-    </nav>
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-    <!-- <div class="container"> -->
-        <h1>LM Spell</h1>
+    <body>
+        <?php include 'components/Navbar.php'; ?>
+        
         <div class="container">
             <textarea placeholder="Enter your text here..."></textarea>
             <button type="button">Correct</button>
             <textarea placeholder="Corrected text will appear here..."></textarea>
         </div>
-    <!-- </div> -->
-</body>
+    </body>
 
 </html>
