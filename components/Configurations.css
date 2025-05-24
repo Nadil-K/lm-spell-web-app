@@ -11,6 +11,7 @@
 	margin-top: 0;
 	margin-bottom: 16px;
 	font-size: 1.2em;
+    color: var(--primary-blue);
 }
 .config-panel label {
 	display: block;

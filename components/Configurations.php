@@ -3,7 +3,7 @@
 
 <div class="config-panel">
 	<h3>Configurations</h3>
-	<form method="post" action="">
+	<form>
 
         <label for="language">Language</label>
 		<select id="language" name="language" required>
@@ -19,6 +19,5 @@
 			<!-- Add more models here -->
 		</select>
 
-		<button type="submit" name="correct">Correct</button>
 	</form>
 </div>
