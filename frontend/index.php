@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <title>LM Spell</title>
 
-        <link rel="icon" type="image/png" href="/assets/uom.png">
+        <link rel="icon" type="image/png" href="assets/uom.png">
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
