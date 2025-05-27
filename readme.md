@@ -43,8 +43,9 @@ In test mode, the backend will mock the `LmSpell` class and simply return the in
 
 
 ## Frontend
+1. Update `APP_URL` in `actions.js`
 
-1. Start the frontend server:
+2. Start the frontend server:
 
     ```bash
     php -S localhost:8080
