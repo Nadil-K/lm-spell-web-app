@@ -30,7 +30,7 @@ body {
     gap: 20px;
     width: 100%;
 }
-.input-textarea {
+.input-textarea, .output-textarea {
     width: 100%;
     max-width: 700px;
     min-height: 250px;
@@ -53,6 +53,28 @@ button {
 }
 button:hover {
     background: var(--primary-blue);
+}
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0);
+}
+button .spinner {
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-right: 2px solid white;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-right: -4px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .wave-background {
