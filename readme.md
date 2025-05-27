@@ -56,7 +56,6 @@ python3 app.py --test
     php -S localhost:8080
     ```
 
-
 ---
 
 For more details, refer to the project documentation or contact the maintainers.
