@@ -40,9 +40,10 @@ This repository contains the web app for the LM Spell Library. The project consi
 ### Running in Test Mode
 
 In test mode, the backend will mock the `LmSpell` class and simply return the input sentence without loading actual classes and models.
-    ```bash
-    python3 app.py --test
-    ```
+
+```bash
+python3 app.py --test
+```
 
 
 ## Frontend
