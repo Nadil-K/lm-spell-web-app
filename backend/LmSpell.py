@@ -1,6 +1,4 @@
 from dotenv import load_dotenv
-from Models.Gemma import Gemma
-from Models.Mt5 import Mt5
 import os
 
 dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
@@ -15,8 +13,10 @@ class LmSpell:
         hf_token = os.getenv("HF_TOKEN")
 
         if self.model_label == 'gemma-2-9b':
+            from Models.Gemma import Gemma
             self.model = Gemma(language, hf_token)
         elif self.model_label == 'mt5':
+            from Models.Mt5 import Mt5
             self.model = Mt5(language, hf_token)
 
     def correct(self, text: str):
