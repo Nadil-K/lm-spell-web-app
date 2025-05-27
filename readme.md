@@ -41,6 +41,15 @@ In test mode, the backend will mock the `LmSpell` class and simply return the in
     python3 app.py --test
     ```
 
+
+## Frontend
+
+1. Start the frontend server:
+
+    ```bash
+    php -S localhost:8080
+    ```
+
 ---
 
 For more details, refer to the project documentation or contact the maintainers.
