@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify, Response
+from flask_cors import CORS
 # import json
 import sys
 
 TESTING_MODE = '--test' in sys.argv
 
 app = Flask(__name__)
+CORS(app)
 
 model_initialized = False
 lm_spell = None

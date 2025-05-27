@@ -1,14 +1,35 @@
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+const APP_URL = 'http://localhost:8000';
 
 export async function init(language, model) {
-    await sleep(2000);
-    console.log('LM Spell initialized', language, model);
+    const url = `${APP_URL}/init`;
+    const payload = { language, model };
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+
+    return await response.json();
 }
 
 export async function correct(text) {
-    await sleep(2000);
-    console.log('correct', text);
-    return text;
+    const url = `${APP_URL}/correct`;
+    const payload = { text };
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+
+    return await response.json();
 }

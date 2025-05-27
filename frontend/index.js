@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         correctButton.appendChild(spinner);
 
         try {
-            const corrected = await correct(inputText);
-            outputTextarea.value = corrected;
+            const response = await correct(inputText);
+            outputTextarea.value = response.corrected;
             lastInput = inputText;
         } catch (error) {
             console.error('Failed to correct:', error);
