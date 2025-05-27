@@ -1,0 +1,46 @@
+# LM Spell Web App
+
+This repository contains the web app for the LM Spell Library. The project consists of two main parts:
+- **Frontend:** Native PHP
+- **Backend:** Flask
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.x installed
+
+### Installation
+
+- Clone the repository:
+    ```bash
+    git clone <repository-url>
+    cd lm-spell-web-app
+    ```
+
+## Backend
+
+1. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2. Start the backend server:
+
+```bash
+cd backend
+python3 app.py
+```
+
+### Running in Test Mode
+
+To run the backend in test mode:
+
+```bash
+cd backend
+python3 app.py --test
+```
+
+---
+
+For more details, refer to the project documentation or contact the maintainers.
