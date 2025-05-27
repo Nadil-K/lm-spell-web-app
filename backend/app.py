@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
+import json
 from LmSpell import LmSpell
 
 # Web server to handle models
@@ -17,7 +18,7 @@ def init():
 
     global model_initialized, lm_spell
 
-    lm_spell = LmSpell()
+    lm_spell = LmSpell(language=language, model_label=model)
     model_initialized = True
     return jsonify({'status': 'initialized'})
 
@@ -30,10 +31,13 @@ def correct_text():
     data = request.get_json()
     text = data.get('text', '')
     
-
-    # Dummy correction logic
-    corrected_text = text  # Replace with actual correction logic
-    return jsonify({'corrected': corrected_text})
+    global lm_spell
+    corrected_text = lm_spell.correct(text)
+    
+    return Response(
+        json.dumps({'corrected': corrected_text}, ensure_ascii=False),
+        content_type='application/json; charset=utf-8'
+    )
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True ,host="0.0.0.0", port=8000)
