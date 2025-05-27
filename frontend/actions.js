@@ -1,4 +1,4 @@
-const APP_URL = 'http://localhost:8000';
+const APP_URL = 'https://cleanly-subtle-rabbit.ngrok-free.app';
 
 export async function init(language, model) {
     const url = `${APP_URL}/init`;
