@@ -23,12 +23,17 @@ This repository contains the web app for the LM Spell Library. The project consi
 1. Install dependencies:
     ```bash
     pip install -r requirements.txt
+    ./init.sh
     ```
 
-2. Start the backend server:
+2. Start ngrok reverse proxy
+    ```bash
+    ./run.sh
+    ```
+
+3. Start the backend server:
 
     ```bash
-    cd backend
     python3 app.py
     ```
 
@@ -37,7 +42,6 @@ This repository contains the web app for the LM Spell Library. The project consi
 In test mode, the backend will mock the `LmSpell` class and simply return the input sentence without loading actual classes and models.
 
     ```bash
-    cd backend
     python3 app.py --test
     ```
 
