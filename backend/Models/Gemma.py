@@ -1,6 +1,6 @@
 
 from unsloth import FastLanguageModel
-from Model import Model
+from Models.Model import Model
 import torch
 import re
 
