@@ -1,6 +1,7 @@
 # LM Spell Web App
 
 This repository contains the web app for the LM Spell Library. The project consists of two main parts:
+
     - **Frontend:** Native PHP
     - **Backend:** Flask
 
