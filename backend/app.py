@@ -23,7 +23,7 @@ def init():
     return jsonify({'status': 'initialized'})
 
 @app.route('/correct', methods=['POST'])
-def correct_text():
+def correct():
 
     if not model_initialized:
         return jsonify({'error': 'Model not initialized'}), 400
@@ -33,11 +33,12 @@ def correct_text():
     
     global lm_spell
     corrected_text = lm_spell.correct(text)
-    
-    return Response(
-        json.dumps({'corrected': corrected_text}, ensure_ascii=False),
-        content_type='application/json; charset=utf-8'
-    )
+
+    return jsonify({'corrected': corrected_text})
+    # return Response(
+    #     json.dumps({'corrected': corrected_text}, ensure_ascii=False),
+    #     content_type='application/json; charset=utf-8'
+    # )
 
 if __name__ == '__main__':
-    app.run(debug=True ,host="0.0.0.0", port=8000)
+    app.run(debug=True, host="0.0.0.0", port=8000)
