@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Spell Checker Extension",
+  "name": "LM Spell Extension",
   "version": "1.0",
   "permissions": ["scripting", "activeTab"],
   "action": {
@@ -13,6 +13,7 @@
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
+      "css": ["style.css"],
       "run_at": "document_idle"
     }
   ],

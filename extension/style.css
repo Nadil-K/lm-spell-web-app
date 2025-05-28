@@ -1,0 +1,14 @@
+.overlay-highlight {
+  position: absolute;
+  white-space: pre-wrap;
+  pointer-events: none;
+  color: transparent;
+  z-index: 9999;
+}
+
+.overlay-highlight span.error {
+  text-decoration: underline;
+  text-decoration-color: red;
+  text-decoration-style: wavy;
+  color: black;
+}
