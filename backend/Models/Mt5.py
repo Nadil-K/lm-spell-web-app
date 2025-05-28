@@ -17,7 +17,7 @@ class Mt5(Model):
 
         self.model.eval()
 
-        text = re.sub(r'\u200d\s*', '<ZWJ>', text)
+        text = re.sub(r'\u200d', '<ZWJ>', text)
         inputs = self.tokenizer(text, return_tensors='pt', padding='max_length', truncation=True, max_length=128)
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
 
