@@ -8,18 +8,17 @@ function sendText(text) {
   }).then(res => res.json());
 }
 
-function createOverlay(textarea) {
+function createOverlay(textarea, wrapper) {
   const overlay = document.createElement("div");
   overlay.className = "overlay-highlight";
 
-  const rect = textarea.getBoundingClientRect();
-  overlay.style.position = "absolute";
-  overlay.style.left = `${rect.left + window.scrollX}px`;
-  overlay.style.top = `${rect.top + window.scrollY}px`;
-  overlay.style.width = `${rect.width}px`;
-  overlay.style.height = `${rect.height}px`;
-
+  // Set overlay styles to match textarea
   const style = window.getComputedStyle(textarea);
+  overlay.style.position = "absolute";
+  overlay.style.left = "0";
+  overlay.style.top = "0";
+  overlay.style.width = `${textarea.offsetWidth}px`;
+  overlay.style.height = `${textarea.offsetHeight}px`;
   overlay.style.font = style.font;
   overlay.style.padding = style.padding;
   overlay.style.border = style.border;
@@ -28,11 +27,32 @@ function createOverlay(textarea) {
   overlay.style.backgroundColor = "transparent";
   overlay.style.color = "transparent";
   overlay.style.pointerEvents = "none";
-  overlay.style.zIndex = 9999;
+  overlay.style.zIndex = 2;
   overlay.style.overflow = "hidden";
 
-  document.body.appendChild(overlay);
+  // Add overlay to wrapper
+  wrapper.appendChild(overlay);
   return overlay;
+}
+
+function wrapTextarea(textarea) {
+  // Create a wrapper div with relative positioning
+  const wrapper = document.createElement("div");
+  wrapper.style.position = "relative";
+  wrapper.style.display = "inline-block";
+  wrapper.style.width = `${textarea.offsetWidth}px`;
+  wrapper.style.height = `${textarea.offsetHeight}px`;
+
+  // Insert wrapper before textarea and move textarea inside
+  textarea.parentNode.insertBefore(wrapper, textarea);
+  wrapper.appendChild(textarea);
+
+  // Set textarea styles for overlay stacking
+  textarea.style.position = "relative";
+  textarea.style.zIndex = 3;
+  textarea.style.background = "transparent";
+
+  return wrapper;
 }
 
 function diffAndHighlight(original, corrected) {
@@ -50,7 +70,8 @@ function diffAndHighlight(original, corrected) {
 }
 
 function setupOverlaySpellcheck(textarea) {
-  const overlay = createOverlay(textarea);
+  const wrapper = wrapTextarea(textarea);
+  const overlay = createOverlay(textarea, wrapper);
 
   // Allow click-through inside the overlay
   overlay.style.pointerEvents = "auto";
@@ -78,17 +99,19 @@ function setupOverlaySpellcheck(textarea) {
     overlay.scrollLeft = textarea.scrollLeft;
   }
 
-  function syncOverlayPosition() {
-    const rect = textarea.getBoundingClientRect();
-    overlay.style.left = `${rect.left + window.scrollX}px`;
-    overlay.style.top = `${rect.top + window.scrollY}px`;
+  function syncOverlaySize() {
+    overlay.style.width = `${textarea.offsetWidth}px`;
+    overlay.style.height = `${textarea.offsetHeight}px`;
+    wrapper.style.width = `${textarea.offsetWidth}px`;
+    wrapper.style.height = `${textarea.offsetHeight}px`;
   }
 
   textarea.addEventListener("input", updateOverlay);
   textarea.addEventListener("scroll", syncOverlayScroll);
-  window.addEventListener("scroll", syncOverlayPosition);
-  window.addEventListener("resize", syncOverlayPosition);
+  window.addEventListener("resize", syncOverlaySize);
 
+  // Initial sync
+  syncOverlaySize();
   updateOverlay();
 }
 
