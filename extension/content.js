@@ -51,6 +51,13 @@ function diffAndHighlight(original, corrected) {
 function setupOverlaySpellcheck(textarea) {
   const overlay = createOverlay(textarea);
 
+  overlay.addEventListener("click", (e) => {
+    const target = e.target;
+        if (target.classList.contains("error")) {
+            showCorrectionPopup(target, target.dataset.corrected);
+        }
+    });
+
   function updateOverlay() {
     const text = textarea.value;
     sendText(text)
@@ -77,13 +84,6 @@ function setupOverlaySpellcheck(textarea) {
   textarea.addEventListener("scroll", syncOverlayScroll);
   window.addEventListener("scroll", syncOverlayPosition);
   window.addEventListener("resize", syncOverlayPosition);
-
-  overlay.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target.classList.contains("error")) {
-      showCorrectionPopup(target, target.dataset.corrected);
-    }
-  });
 
   updateOverlay();
 }
