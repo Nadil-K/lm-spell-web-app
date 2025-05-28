@@ -49,14 +49,14 @@ function diffAndHighlight(original, corrected) {
 }
 
 function setupOverlaySpellcheck(textarea) {
-  const overlay = createOverlay(textarea);
+  const overlay = createOverlay(textarea); // overlay is defined here
 
   overlay.addEventListener("click", (e) => {
     const target = e.target;
-        if (target.classList.contains("error")) {
-            showCorrectionPopup(target, target.dataset.corrected);
-        }
-    });
+    if (target.classList.contains("error")) {
+      showCorrectionPopup(target, target.dataset.corrected);
+    }
+  });
 
   function updateOverlay() {
     const text = textarea.value;
@@ -69,15 +69,15 @@ function setupOverlaySpellcheck(textarea) {
       .catch(err => console.error("Spellcheck error:", err));
   }
 
+  function syncOverlayScroll() {
+    overlay.scrollTop = textarea.scrollTop;
+    overlay.scrollLeft = textarea.scrollLeft;
+  }
+
   function syncOverlayPosition() {
     const rect = textarea.getBoundingClientRect();
     overlay.style.left = `${rect.left + window.scrollX}px`;
     overlay.style.top = `${rect.top + window.scrollY}px`;
-  }
-
-  function syncOverlayScroll() {
-    overlay.scrollTop = textarea.scrollTop;
-    overlay.scrollLeft = textarea.scrollLeft;
   }
 
   textarea.addEventListener("input", updateOverlay);
