@@ -11,9 +11,10 @@ class Mt5(Model):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = MT5ForConditionalGeneration.from_pretrained(model_path, token=hf_token).to(self.device)
         self.tokenizer = T5TokenizerFast.from_pretrained("google/mt5-base")
-
-    def correct(self, text: str):
+        self.tokenizer.add_special_tokens({'additional_special_tokens': ['<ZWJ>']})
         
+    def correct(self, text: str):
+        text = re.sub(r'\u200d\s*', '<ZWJ>', text)
         self.model.eval()
 
         inputs = self.tokenizer(text, return_tensors='pt', padding='max_length', truncation=True, max_length=128)
@@ -32,7 +33,7 @@ class Mt5(Model):
         mask = (tokens_tensor == special_token_tensor) | (~torch.isin(tokens_tensor, all_special_ids))
         filtered_tokens = tokens_tensor[mask].tolist()
         
-        prediction_decoded = self.tokenizer.decode(filtered_tokens, skip_special_tokens=True).replace('\n', '').strip()
+        prediction_decoded = self.tokenizer.decode(filtered_tokens, skip_special_tokens=False).replace('\n', '').strip()
         
         return re.sub(r'<ZWJ>\s?', '\u200d', prediction_decoded)
     
