@@ -12,23 +12,24 @@ function createOverlay(textarea) {
   const overlay = document.createElement("div");
   overlay.className = "overlay-highlight";
 
-  const style = window.getComputedStyle(textarea);
-  ["top", "left", "width", "height"].forEach(prop => {
-    overlay.style[prop] = style[prop];
-  });
-
-  overlay.style.font = style.font;
-  overlay.style.padding = style.padding;
-  overlay.style.border = style.border;
-  overlay.style.overflow = "auto";
-  overlay.style.backgroundColor = "transparent";
-
   const rect = textarea.getBoundingClientRect();
   overlay.style.position = "absolute";
   overlay.style.left = `${rect.left + window.scrollX}px`;
   overlay.style.top = `${rect.top + window.scrollY}px`;
   overlay.style.width = `${rect.width}px`;
   overlay.style.height = `${rect.height}px`;
+
+  const style = window.getComputedStyle(textarea);
+  overlay.style.font = style.font;
+  overlay.style.padding = style.padding;
+  overlay.style.border = style.border;
+  overlay.style.lineHeight = style.lineHeight;
+  overlay.style.whiteSpace = "pre-wrap";
+  overlay.style.backgroundColor = "transparent";
+  overlay.style.color = "transparent";
+  overlay.style.pointerEvents = "none";
+  overlay.style.zIndex = 9999;
+  overlay.style.overflow = "hidden";
 
   document.body.appendChild(overlay);
   return overlay;
@@ -49,7 +50,10 @@ function diffAndHighlight(original, corrected) {
 }
 
 function setupOverlaySpellcheck(textarea) {
-  const overlay = createOverlay(textarea); // overlay is defined here
+  const overlay = createOverlay(textarea);
+
+  // Allow click-through inside the overlay
+  overlay.style.pointerEvents = "auto";
 
   overlay.addEventListener("click", (e) => {
     const target = e.target;
@@ -97,6 +101,14 @@ function showCorrectionPopup(target, correctedWord) {
   popup.className = "correction-popup";
   popup.textContent = `Suggestion: ${correctedWord}`;
 
+  popup.style.position = "absolute";
+  popup.style.background = "#fff";
+  popup.style.border = "1px solid #aaa";
+  popup.style.padding = "5px 8px";
+  popup.style.borderRadius = "4px";
+  popup.style.fontSize = "12px";
+  popup.style.zIndex = "10000";
+  popup.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
   popup.style.top = `${rect.bottom + window.scrollY + 5}px`;
   popup.style.left = `${rect.left + window.scrollX}px`;
 
