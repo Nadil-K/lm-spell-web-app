@@ -17,6 +17,6 @@
     }
   ],
   "host_permissions": [
-    "https://cleanly-subtle-rabbit.ngrok-free.app"
+    "https://cleanly-subtle-rabbit.ngrok-free.app/*"
   ]
 }
