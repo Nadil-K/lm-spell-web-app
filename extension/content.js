@@ -73,8 +73,17 @@ function setupOverlaySpellcheck(textarea) {
   const wrapper = wrapTextarea(textarea);
   const overlay = createOverlay(textarea, wrapper);
 
-  // Allow click-through inside the overlay
   overlay.style.pointerEvents = "auto";
+
+  overlay.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.classList.contains("error")) {
+      e.stopPropagation();
+      showCorrectionPopup(target, target.dataset.corrected);
+    }
+  });
+
+  let lastChangeTimestamp = 0;
 
   function updateOverlay() {
     const text = textarea.value;
@@ -99,24 +108,38 @@ function setupOverlaySpellcheck(textarea) {
     wrapper.style.height = `${textarea.offsetHeight}px`;
   }
 
-  textarea.addEventListener("input", updateOverlay);
+  // Update the last change timestamp on input
+  textarea.addEventListener("input", () => {
+    lastChangeTimestamp = Date.now();
+  });
+
+  // Every 10 seconds, check if a change occurred in the last 10 seconds
+  setInterval(() => {
+    const now = Date.now();
+    if (now - lastChangeTimestamp <= 10000) {
+      updateOverlay();
+    }
+  }, 10000);
+
   textarea.addEventListener("scroll", syncOverlayScroll);
   window.addEventListener("resize", syncOverlaySize);
 
-  // Initial sync
   syncOverlaySize();
-  updateOverlay();
 }
 
 function showCorrectionPopup(target, correctedWord) {
+  // Remove existing popups
   document.querySelectorAll(".correction-popup").forEach(el => el.remove());
 
+  // Get position of clicked word
   const rect = target.getBoundingClientRect();
 
+  // Create popup
   const popup = document.createElement("div");
   popup.className = "correction-popup";
   popup.textContent = `Suggestion: ${correctedWord}`;
 
+  // Style and position
   popup.style.position = "absolute";
   popup.style.background = "#fff";
   popup.style.border = "1px solid #aaa";
@@ -130,8 +153,14 @@ function showCorrectionPopup(target, correctedWord) {
 
   document.body.appendChild(popup);
 
-  setTimeout(() => popup.remove(), 3000);
-  document.addEventListener("click", () => popup.remove(), { once: true });
+  // Add delayed click-away removal
+  setTimeout(() => {
+    const removePopup = () => {
+      popup.remove();
+      document.removeEventListener("click", removePopup);
+    };
+    document.addEventListener("click", removePopup);
+  }, 50);
 }
 
 function init() {

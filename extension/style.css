@@ -1,4 +1,5 @@
 .overlay-highlight {
+  overflow: visible;
   position: absolute;
   white-space: pre-wrap;
   pointer-events: none;
@@ -50,7 +51,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
-  z-index: 9999;
+  z-index: 10001;
 }
 
 .error:hover::after {
