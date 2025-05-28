@@ -14,9 +14,10 @@ class Mt5(Model):
         self.tokenizer.add_special_tokens({'additional_special_tokens': ['<ZWJ>']})
         
     def correct(self, text: str):
-        text = re.sub(r'\u200d\s*', '<ZWJ>', text)
+
         self.model.eval()
 
+        text = re.sub(r'\u200d\s*', '<ZWJ>', text)
         inputs = self.tokenizer(text, return_tensors='pt', padding='max_length', truncation=True, max_length=128)
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
 
