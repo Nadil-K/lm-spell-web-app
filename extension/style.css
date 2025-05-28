@@ -5,6 +5,9 @@
   pointer-events: none;
   color: transparent;
   z-index: 9999;
+  border: none;      
+  outline: none;      
+  background: transparent; 
 }
 
 .overlay-highlight span.error {

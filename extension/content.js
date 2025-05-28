@@ -29,6 +29,8 @@ function createOverlay(textarea, wrapper) {
   overlay.style.pointerEvents = "none";
   overlay.style.zIndex = 2;
   overlay.style.overflow = "hidden";
+  overlay.style.border = "none"; 
+  overlay.style.outline = "none"; 
 
   // Add overlay to wrapper
   wrapper.appendChild(overlay);
