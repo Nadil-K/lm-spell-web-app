@@ -8,7 +8,20 @@
 
 .overlay-highlight span.error {
   text-decoration: underline;
-  text-decoration-color: red;
-  text-decoration-style: wavy;
+  text-decoration-color: rgb(243, 106, 106);
+  text-decoration-style: solid; /* was 'wavy' */
   color: black;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.correction-popup {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #aaa;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 10000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }

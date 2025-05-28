@@ -40,7 +40,9 @@ function diffAndHighlight(original, corrected) {
 
   return originalWords.map((word, i) => {
     if (word !== correctedWords[i]) {
-      return `<span class="error">${word}</span>`;
+      const escapedOriginal = word.replace(/"/g, '&quot;');
+      const escapedCorrected = correctedWords[i]?.replace(/"/g, '&quot;') || '';
+      return `<span class="error" data-original="${escapedOriginal}" data-corrected="${escapedCorrected}">${escapedOriginal}</span>`;
     }
     return word;
   }).join(" ");
@@ -77,6 +79,33 @@ function setupOverlaySpellcheck(textarea) {
   window.addEventListener("resize", syncOverlayPosition);
 
   updateOverlay();
+}
+
+overlay.addEventListener("click", (e) => {
+  const target = e.target;
+  if (target.classList.contains("error")) {
+    showCorrectionPopup(target, target.dataset.corrected);
+  }
+});
+
+function showCorrectionPopup(target, correctedWord) {
+  // Remove old popups
+  document.querySelectorAll(".correction-popup").forEach(el => el.remove());
+
+  const rect = target.getBoundingClientRect();
+
+  const popup = document.createElement("div");
+  popup.className = "correction-popup";
+  popup.textContent = `Suggestion: ${correctedWord}`;
+
+  popup.style.top = `${rect.bottom + window.scrollY + 5}px`;
+  popup.style.left = `${rect.left + window.scrollX}px`;
+
+  document.body.appendChild(popup);
+
+  // Auto-remove after 3 seconds or on next click
+  setTimeout(() => popup.remove(), 3000);
+  document.addEventListener("click", () => popup.remove(), { once: true });
 }
 
 function init() {
