@@ -78,18 +78,17 @@ function setupOverlaySpellcheck(textarea) {
   window.addEventListener("scroll", syncOverlayPosition);
   window.addEventListener("resize", syncOverlayPosition);
 
+  overlay.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.classList.contains("error")) {
+      showCorrectionPopup(target, target.dataset.corrected);
+    }
+  });
+
   updateOverlay();
 }
 
-overlay.addEventListener("click", (e) => {
-  const target = e.target;
-  if (target.classList.contains("error")) {
-    showCorrectionPopup(target, target.dataset.corrected);
-  }
-});
-
 function showCorrectionPopup(target, correctedWord) {
-  // Remove old popups
   document.querySelectorAll(".correction-popup").forEach(el => el.remove());
 
   const rect = target.getBoundingClientRect();
@@ -103,7 +102,6 @@ function showCorrectionPopup(target, correctedWord) {
 
   document.body.appendChild(popup);
 
-  // Auto-remove after 3 seconds or on next click
   setTimeout(() => popup.remove(), 3000);
   document.addEventListener("click", () => popup.remove(), { once: true });
 }
