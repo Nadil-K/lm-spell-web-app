@@ -76,14 +76,6 @@ function setupOverlaySpellcheck(textarea) {
   // Allow click-through inside the overlay
   overlay.style.pointerEvents = "auto";
 
-  // All handlers that use overlay must be inside this function!
-  overlay.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target.classList.contains("error")) {
-      showCorrectionPopup(target, target.dataset.corrected);
-    }
-  });
-
   function updateOverlay() {
     const text = textarea.value;
     sendText(text)
