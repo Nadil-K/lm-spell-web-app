@@ -22,8 +22,8 @@ class Mt5(Model):
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
 
         with torch.no_grad():
-            outputs = self.model(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"], labels=inputs["labels"])
-            prediction = torch.argmax(outputs.logits, dim=-1)
+            outputs = self.model.generate(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"])
+            prediction = outputs[0]
 
         special_token_id_to_keep = self.tokenizer.convert_tokens_to_ids('<ZWJ>')
         all_special_ids = torch.tensor(self.tokenizer.all_special_ids, dtype=torch.int64).to(self.device)
