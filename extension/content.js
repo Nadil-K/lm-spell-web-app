@@ -1,5 +1,20 @@
 const BACKEND_URL = "https://cleanly-subtle-rabbit.ngrok-free.app/correct";
 
+// --- Utility: Escape and sentence split ---
+
+function escapeHTML(s) {
+  return (s + "").replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
+  );
+}
+
+function splitIntoSentences(text) {
+  // Simple sentence split (improve as needed for more robust NLP)
+  return text.match(/[^\.!\?]+[\.!\?]+|[^\.!\?]+$/g) || [];
+}
+
+// --- Correction API ---
+
 function sendText(text) {
   return fetch(BACKEND_URL, {
     method: "POST",
@@ -21,16 +36,11 @@ function highlightContent(text, errors) {
   return html;
 }
 
-function escapeHTML(s) {
-  return (s + "").replace(/[&<>"']/g, c =>
-    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
-  );
-}
+// --- Hide original textarea, keep it hidden even if the app re-shows it ---
 
 function hideTextarea(textarea) {
   textarea.style.display = 'none';
 }
-
 function observeAndHide(textarea) {
   hideTextarea(textarea);
   if (textarea._hideObserver) return;
@@ -43,12 +53,17 @@ function observeAndHide(textarea) {
   textarea._hideObserver = observer;
 }
 
-// Enhance an existing div[contenteditable="true"]
+// --- Enhance existing div[contenteditable="true"] (for simple editors) ---
+
 function createContentEditableEnhancer(editor) {
   if (editor.getAttribute('data-enhanced') === 'true') return;
   editor.setAttribute('data-enhanced', 'true');
   editor.classList.add('extension-spell-editor');
   editor.style.outline = 'none';
+
+  // Track state for background correction
+  editor._lmspell_lastSentText = editor.innerText;
+  editor._lmspell_lastSentSentences = splitIntoSentences(editor.innerText);
 
   let lastPlain = "";
 
@@ -87,10 +102,13 @@ function createContentEditableEnhancer(editor) {
         selection.selectAllChildren(editor);
         selection.collapseToEnd();
       }
+      // Update tracking for 10s background logic
+      editor._lmspell_lastSentText = editor.innerText;
+      editor._lmspell_lastSentSentences = splitIntoSentences(editor.innerText);
     });
   }
 
-  // Trigger spellcheck/highlight on all edit events
+  // INSTANT spellcheck on edit
   editor.addEventListener('input', highlightAndSpellcheck);
 
   // Correction popup logic
@@ -109,7 +127,8 @@ function createContentEditableEnhancer(editor) {
   document.addEventListener('click', removePopup);
 }
 
-// Enhance a textarea into a contenteditable spell editor
+// --- Enhance textarea as contenteditable spell editor ---
+
 function createContentEditableFromTextarea(textarea) {
   if (textarea.getAttribute("data-enhanced") === "true") return;
   textarea.setAttribute("data-enhanced", "true");
@@ -127,7 +146,7 @@ function createContentEditableFromTextarea(textarea) {
   editor.style.lineHeight = style.lineHeight;
   editor.style.padding = style.padding || "8px";
   editor.style.margin = style.margin;
-  editor.style.border = style.border || "1px solid #bbb";
+  editor.style.border = style.border || "None";
   editor.style.borderRadius = style.borderRadius || "8px";
   editor.style.boxSizing = style.boxSizing || "border-box";
   editor.style.background = style.backgroundColor || "#fff";
@@ -146,6 +165,10 @@ function createContentEditableFromTextarea(textarea) {
 
   textarea.parentNode.insertBefore(editor, textarea.nextSibling);
   observeAndHide(textarea);
+
+  // Track state for background correction
+  editor._lmspell_lastSentText = editor.innerText;
+  editor._lmspell_lastSentSentences = splitIntoSentences(editor.innerText);
 
   function syncToTextarea() {
     if (textarea.value !== editor.innerText) {
@@ -216,6 +239,9 @@ function createContentEditableFromTextarea(textarea) {
             selection.collapseToEnd();
           }
           checkPlaceholder();
+          // Update tracking for 10s background logic
+          editor._lmspell_lastSentText = editor.innerText;
+          editor._lmspell_lastSentSentences = splitIntoSentences(editor.innerText);
         })
         .catch(err => {
           console.error("Spell correction error:", err);
@@ -225,7 +251,7 @@ function createContentEditableFromTextarea(textarea) {
     }
   }
 
-  // --- INSTANT SYNC: on all possible edit events ---
+  // INSTANT SYNC: on all possible edit events
   function instantSync() { syncToTextarea(); }
   editor.addEventListener('input', e => { highlightAndSpellcheck(); instantSync(); });
   editor.addEventListener('keyup', instantSync);
@@ -255,7 +281,8 @@ function createContentEditableFromTextarea(textarea) {
   }
 }
 
-// Enhance all editors currently present (at DOM load)
+// --- Enhance all editors currently present (at DOM load) ---
+
 function enhanceAllEditors() {
   document.querySelectorAll('textarea:not([readonly]):not([disabled]):not([data-enhanced])')
     .forEach(createContentEditableFromTextarea);
@@ -264,13 +291,14 @@ function enhanceAllEditors() {
     .forEach(createContentEditableEnhancer);
 }
 
+// --- Robust: enhance at load, whether DOM is ready or not ---
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", enhanceAllEditors);
 } else {
   enhanceAllEditors();
 }
 
-// --- MutationObserver: Enhance as soon as any new editor appears ---
+// --- MutationObserver: Enhance new editors as they appear instantly ---
 function enhanceIfNeeded(node) {
   if (node.nodeType !== 1) return;
   if (node.matches && node.matches('textarea:not([readonly]):not([disabled]):not([data-enhanced])'))
@@ -294,6 +322,7 @@ const observer = new MutationObserver((mutations) => {
 observer.observe(document.body, { childList: true, subtree: true });
 
 // --- Popup helpers ---
+
 function showPopup(x, y, suggestion, onReplace) {
   removePopup();
   const popup = document.createElement('div');
@@ -317,3 +346,75 @@ function showPopup(x, y, suggestion, onReplace) {
 function removePopup() {
   document.querySelectorAll('.spell-popup').forEach(p => p.remove());
 }
+
+// --- 10-second background correction requests for only changed sentences ---
+
+setInterval(() => {
+  document.querySelectorAll('.extension-spell-editor[data-enhanced="true"]').forEach(editor => {
+    const currentText = editor.innerText;
+    if (editor._lmspell_lastSentText !== currentText) {
+      const currentSentences = splitIntoSentences(currentText);
+      const lastSent = editor._lmspell_lastSentSentences || [];
+
+      // Find sentences that are new or changed, along with their index
+      const changed = [];
+      for (let i = 0; i < currentSentences.length; ++i) {
+        if (currentSentences[i] !== lastSent[i]) {
+          changed.push({ sentence: currentSentences[i], idx: i });
+        }
+      }
+
+      if (changed.length > 0) {
+        // Highlight each changed sentence in place
+        changed.forEach(({ sentence, idx }) => {
+          sendText(sentence).then(res => {
+            let errors = [];
+            // Detect errors in just this sentence
+            if (res.errors) {
+              errors = res.errors;
+            } else if (res.corrected && res.corrected !== sentence) {
+              const orig = sentence.split(" ");
+              const cor = res.corrected.split(" ");
+              let localIdx = 0;
+              for (let i = 0; i < Math.min(orig.length, cor.length); i++) {
+                if (orig[i] !== cor[i]) {
+                  let start = sentence.indexOf(orig[i], localIdx);
+                  errors.push({
+                    start: start,
+                    end: start + orig[i].length,
+                    suggestion: cor[i],
+                    word: orig[i]
+                  });
+                  localIdx = start + orig[i].length;
+                } else {
+                  localIdx += orig[i].length + 1;
+                }
+              }
+            }
+            // Now highlight just this sentence
+            const highlightedSentence = highlightContent(sentence, errors);
+
+            // Split editor content into sentences (with regex, as above)
+            const rawSentences = splitIntoSentences(editor.innerText);
+            let rebuiltHTML = '';
+            for (let j = 0; j < rawSentences.length; ++j) {
+              if (j > 0) rebuiltHTML += ' '; // preserve spacing between sentences
+              if (j === idx) {
+                rebuiltHTML += highlightedSentence;
+              } else {
+                // Keep existing sentence, escape HTML
+                rebuiltHTML += escapeHTML(rawSentences[j] || '');
+              }
+            }
+
+            editor.innerHTML = rebuiltHTML;
+          });
+        });
+      }
+
+      // Update tracking
+      editor._lmspell_lastSentText = currentText;
+      editor._lmspell_lastSentSentences = currentSentences;
+    }
+  });
+}, 10000);
