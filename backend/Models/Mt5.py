@@ -18,11 +18,18 @@ class Mt5(Model):
         self.model.eval()
 
         text = re.sub(r'\u200d', '<ZWJ>', text)
-        inputs = self.tokenizer(text, return_tensors='pt', padding='max_length', truncation=True, max_length=128)
+        # inputs = self.tokenizer(text, return_tensors='pt', padding='max_length', truncation=True, max_length=1024)
+        inputs = self.tokenizer(text, return_tensors='pt', padding='do_not_pad', max_length=1024)
+        print(inputs['input_ids'].shape)
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
 
         with torch.no_grad():
-            outputs = self.model.generate(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"])
+            # outputs = self.model.generate(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"])
+            outputs = self.model.generate(
+                input_ids=inputs["input_ids"],
+                attention_mask=inputs["attention_mask"],
+                max_length=1024,
+            )
             prediction = outputs[0]
 
         special_token_id_to_keep = self.tokenizer.convert_tokens_to_ids('<ZWJ>')
