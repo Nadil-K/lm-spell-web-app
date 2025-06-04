@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "LM Spell Extension",
+  "version": "1.0",
+  "permissions": ["scripting", "activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["style.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "https://cleanly-subtle-rabbit.ngrok-free.app/*"
+  ]
+}
