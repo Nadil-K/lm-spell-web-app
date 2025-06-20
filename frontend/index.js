@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await correct(inputText);
-            outputTextarea.value = response.corrected;
+            outputTextarea.value = response;
             lastInput = inputText;
         } catch (error) {
             console.error('Failed to correct:', error);
