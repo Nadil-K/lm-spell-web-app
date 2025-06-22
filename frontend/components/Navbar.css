@@ -56,6 +56,12 @@
     color: var(--primary-blue);
 }
 
+.title-link {
+    text-decoration: none;
+    color: inherit;
+    font: inherit;
+  }
+
 .navbar-right {
     display: flex;
     align-items: center;

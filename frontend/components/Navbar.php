@@ -8,7 +8,9 @@
         <div class="navbar-logo">
             <img src="assets/cse.webp" alt="Logo" id="cse-logo">
         </div>
-        <span class="navbar-title">LM Spell</span>
+        <span class="navbar-title">
+            <a href="/" class="title-link">LM Spell</a>
+        </span>
     </div>
     <div class="navbar-right">
         <a href="https://github.com/Nadil-K/lm-spell" class="navbar-link" target="_blank">
