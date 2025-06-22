@@ -105,7 +105,7 @@
 
                 <img class="avatar"  src="assets/avatars/surangika.png" alt="Surangika Ranathunga">
 
-                <h3>Surangika Ranathunga</h3>
+                <h3>Dr. Surangika Ranathunga</h3>
 
                 <p>Senior Lecturer</p>
                 <p style="font-size: 0.8rem">
@@ -129,7 +129,7 @@
 
                 <img class="avatar"  src="assets/avatars/nisansa.png" alt="Nisansa de Silva">
 
-                <h3>Nisansa de Silva</h3>
+                <h3>Dr. Nisansa de Silva</h3>
 
                 <p>Senior Lecturer</p>
                 <p style="font-size: 0.8rem">
