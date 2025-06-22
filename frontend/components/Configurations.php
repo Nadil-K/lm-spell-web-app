@@ -24,7 +24,7 @@
         <!-- <button type="submit">Initialize Model</button> -->
 
 		<label class="disclaimer">
-			*Due to resource constraints, mT5 model for Sinhala language is only available.
+			*Due to resource constraints, only the mT5 model for Sinhala language is available.
 		</label>
     </form>
 </div>

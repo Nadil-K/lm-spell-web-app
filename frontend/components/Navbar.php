@@ -9,7 +9,7 @@
             <img src="assets/cse.webp" alt="Logo" id="cse-logo">
         </div>
         <span class="navbar-title">
-            <a href="/" class="title-link">LM Spell</a>
+            <a href="." class="title-link">LM Spell</a>
         </span>
     </div>
     <div class="navbar-right">
