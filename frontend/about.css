@@ -1,0 +1,111 @@
+:root {
+    --primary-blue: #005b97;
+    --secondary-blue: #6497b1;
+}
+
+* {
+    font-family: "Ubuntu", sans-serif;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    width: calc(100% - 130px);
+    margin: 70px 65px;
+}
+
+.container h1 {
+    text-align: center;
+    padding-top: 0.8rem;
+    margin-bottom: 0;
+    font-size: 2.5rem;
+    color: #2c3e50;
+}
+
+
+.team-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 375px));
+    gap: 2rem;
+    padding: 1.7rem;
+    max-width: 1200px;
+    margin: auto;
+    justify-content: center;
+}
+
+.person-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.person-card:hover {
+    transform: translateY(-5px);
+}
+
+.person-card h3 {
+    padding-bottom: 0.5rem;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.person-card h3 {
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.2rem;
+}
+
+.person-card p {
+    margin: 0.2rem 0;
+    font-size: 0.95rem;
+}
+
+.links {
+    margin-top: 1rem;
+}
+
+.links a {
+    margin: 0 0.2rem;
+    color: #2980b9;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.section-title {
+    text-align: center;
+    /* margin: 2rem 0 1rem; */
+    margin: 0;
+    font-size: 1.8rem;
+    color: #444;
+}
+
+@media (max-width: 600px) {
+    .person-card {
+        padding: 1rem;
+    }
+}
+
+.wave-background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: -50px;
+    background-size: cover;
+    z-index: -100;
+    pointer-events: none;
+    width: 100vw;
+}
