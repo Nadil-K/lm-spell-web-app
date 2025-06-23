@@ -1,0 +1,3 @@
+[submodule "hf-spaces"]
+	path = hf-spaces
+	url = https://huggingface.co/spaces/Nadil-K/lm-spell

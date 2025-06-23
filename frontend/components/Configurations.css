@@ -34,3 +34,9 @@
 	background-position: right 10px center;
 	background-size: 16px 16px;
 }
+
+.disclaimer {
+	font-size: 0.9em;
+	color: #ff4545;
+	/* margin-top: 10px; */
+}
